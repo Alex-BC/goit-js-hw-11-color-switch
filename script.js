@@ -5,6 +5,7 @@ const refs = {
   stopBtn: document.querySelector('[data-action="stop"]'),
   body: document.querySelector('body'),
 };
+
 // console.log(refs.body);
 // console.log(refs.startBtn);
 
@@ -22,6 +23,8 @@ const changeBackgroundColor = {
   isActive: false,
 
   start() {
+    refs.startBtn.disabled = true;
+    refs.stopBtn.disabled = false;
     if (this.isActive) {
       return;
     }
@@ -30,12 +33,14 @@ const changeBackgroundColor = {
     this.isActive = true;
     this.getNewColorId = setInterval(() => {
       refs.body.style.backgroundColor = `${
-        colors[randomIntegerFromInterval(0, 5)]
+        colors[randomIntegerFromInterval(0, colors.length - 1)]
       }`;
     }, 1000);
   },
 
   stop() {
+    refs.startBtn.disabled = false;
+    refs.stopBtn.disabled = true;
     clearInterval(this.getNewColorId);
     this.isActive = false;
   },
